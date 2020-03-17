@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Crono</string>
+    <string name="timer">00:00:00</string>
+    <string name="start_btn">Start</string>
+    <string name="stop_btn">Stop</string>
+    <string name="reset_btn">Reset</string>
+</resources>
