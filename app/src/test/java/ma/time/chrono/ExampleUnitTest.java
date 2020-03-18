@@ -1,4 +1,4 @@
-package ma.time.crono;
+package ma.time.chrono;
 
 import org.junit.Test;
 

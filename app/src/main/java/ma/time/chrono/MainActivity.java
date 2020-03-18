@@ -1,4 +1,4 @@
-package ma.time.crono;
+package ma.time.chrono;
 
 import android.os.Handler;
 import android.view.View;
@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private int minute = 0 ;
     private int hour = 0 ;
     private boolean isStart = false;
+    // this Variable to remember the origin  state
+    private boolean wasStart = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,22 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt("second",second);
         outState.putBoolean("isStart",isStart);
+    }
+    // We are overriding the onPause and onResume lifeCycle methods to add the following functionnalities:
+    // if the app lose the focus it stop the stopWatch.
+    // if the app is invisible also it stop counting.
+    // when it came back in the foreground it continue the counting from where it left
+    @Override
+    protected void onPause() {
+        super.onPause();
+        wasStart = isStart ;
+        isStart = false ;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isStart = wasStart;
     }
 
     public void onClickStart(View view){
