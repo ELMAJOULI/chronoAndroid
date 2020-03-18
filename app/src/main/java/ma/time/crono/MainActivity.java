@@ -3,6 +3,7 @@ package ma.time.crono;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -18,9 +19,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // we verify if is it the first time ( no Bundle Object has been returned ) if it's not we retrieve the value stored in the
+        // savedInstanceState of Bundle Object type
+        if(savedInstanceState != null){
+            second = savedInstanceState.getInt("second");
+            isStart = savedInstanceState.getBoolean("isStart");
+        }
         timer_tv = (TextView) findViewById(R.id.timer_tv);
-        System.out.println("The current Thread oncreate : " + Thread.currentThread().getId());
         runTimer();
+    }
+
+    //this method to save the state of the activity when the device configuration get changed ( screen rotated, language changed ... )
+    //the activity will be destroyed so we put the second variable into a Bundle Object
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("second",second);
+        outState.putBoolean("isStart",isStart);
     }
 
     public void onClickStart(View view){
@@ -53,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
                     timer_tv.setText(time);
                 }
                   System.out.println("The current Thread runtimer : " + Thread.currentThread().getId());
-                  handler.postDelayed(this,1000);
+                 // handler.postDelayed(this,1000);
+                  handler.post(this);
 
             }
 
